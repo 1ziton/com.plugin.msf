@@ -1,0 +1,23 @@
+{
+  "name" : "com.plugin.msf",
+  "version" : "0.0.3",
+  "author" : ["liye","yilei","yangqian"],
+  "cordova" : {
+    "id" : "com.plugins.msf",
+    "platforms" : [
+      "ios",
+      "android"
+    ]
+  },
+  "description" : "msf sdk plugin for ionic3",
+  "keywords" : [
+    "ecosystem:cordova",
+    "cordova-ios",
+    "cordova-android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/1ziton/com.plugin.msf.git"
+  },
+  "license" : "ISC"
+}

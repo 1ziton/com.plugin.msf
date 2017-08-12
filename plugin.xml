@@ -1,0 +1,444 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="com.plugin.msf"
+version="0.0.3" 
+xmlns="http://apache.org/cordova/ns/plugins/1.0" 
+xmlns:android="http://schemas.android.com/apk/res/android">
+
+<name>msf</name>
+<js-module name="msf" src="www/msf.js">
+<clobbers target="cordova.plugin.msf" />
+</js-module>
+
+<platform name="ios">
+    <config-file parent="/*" target="config.xml">
+        <feature name="msf">
+            <param name="ios-package" value="msf"/>
+        </feature>
+    </config-file>
+    <source-file src="src/ios/msf.m"/>
+</platform>
+
+<platform name="android">
+<config-file parent="/*" target="res/xml/config.xml">
+<feature name="msf">
+<param name="android-package" value="com.plugin.msf.msf" />
+</feature>
+</config-file>
+
+<config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_SETTINGS"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
+    <uses-permission android:name="com.taobao.permission.USE_CREDENTIALS"/>
+    <uses-permission android:name="com.taobao.permission.UPDATE_CREDENTIALS"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <!-- tao account share end -->
+
+
+    <!-- sonic start -->
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+    <!-- sonic end -->
+
+
+    <!-- agoo start -->
+    <uses-permission android:name="org.agoo.android.permission.MESSAGE"/>
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+    <uses-permission android:name="com.taobao.taobao.permission.C2D_MESSAGE"/>
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+    <!-- agoo end -->
+
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="com.tmall.wireless.privateinfo.permission.READ_MESSAGE"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+
+    <uses-permission android:name="android.permission.FLASHLIGHT"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+
+    <uses-feature android:name="android.hardware.camera"/>
+    <uses-feature android:name="android.hardware.camera.autofocus"/>
+        </config-file>
+
+    <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <activity android:name="com.alibaba.sdk.android.webview.BaseWebViewActivity"/>
+        <receiver android:exported="false" android:name="com.alibaba.sdk.android.hotpatch.HotPatchBroadcastReceiver" android:process=":hotpatch">
+            <intent-filter>
+                <action android:name="com.alibaba.sdk.android.hotpatch.action.HOT_PATCH"/>
+            </intent-filter>
+        </receiver>
+        <activity android:name="com.alibaba.sdk.android.msf.activity.LoginActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustResize|stateHidden">
+        </activity>
+        <activity android:name="com.alibaba.sdk.android.msf.activity.RegisterActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustResize|stateHidden">
+        </activity>
+        <activity android:name="com.alibaba.sdk.android.msf.activity.SkillActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustResize|stateHidden">
+        </activity>
+        <activity android:name="com.alibaba.sdk.android.msf.activity.VerifyBySdkActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustResize|stateHidden">
+        </activity>
+        <activity android:name="com.alibaba.sdk.android.msf.activity.NoIdentifyCodeActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustResize|stateHidden">
+        </activity>
+        <activity android:configChanges="orientation|keyboardHidden" android:name="com.alibaba.sdk.android.msf.activity.CameraActivity" android:screenOrientation="portrait" android:windowSoftInputMode="stateAlwaysHidden"/>
+        <activity android:name="com.alibaba.sdk.android.msf.activity.MWebActivity" android:screenOrientation="portrait" android:windowSoftInputMode="stateAlwaysHidden"/>
+        <activity android:name="com.alibaba.sdk.android.msf.activity.MImgActivity" android:screenOrientation="portrait" android:windowSoftInputMode="stateAlwaysHidden"/>
+        <activity android:name="com.alibaba.sdk.android.msf.dialog.FaceDialog" android:theme="@style/MyDialogStyleBottom"/>
+        <activity android:name="com.alibaba.sdk.android.msf.dialog.PicDialog" android:theme="@style/MyDialogStyleBottom"/>
+        </config-file>
+
+    <!--以下是我从友盟中下的库,你可以根据需要替换,这些都将出现在安卓项目的jinLib文件夹下-->
+  <source-file src="src/android/libs/sdk-legacy-support-2.0.0.jar" target-dir="libs/" />
+    <source-file src="src/android/libs/alisdk-hotpatch-3.jar" target-dir="libs/" />
+    <source-file src="src/android/libs/alisdk-kernel-2.0.0.jar" target-dir="libs/" />
+    <source-file src="src/android/libs/alisdk-rpc-3.jar" target-dir="libs/" />
+    <source-file src="src/android/libs/alisdk-security-8.jar" target-dir="libs/" />
+    <source-file src="src/android/libs/alisdk-system-14.jar" target-dir="libs/" />
+  <source-file src="src/android/libs/alisdk-ui-6.jar" target-dir="libs/" />  
+  <source-file src="src/android/libs/alisdk-ut-5.jar" target-dir="libs/" />
+  <source-file src="src/android/libs/AMap_Location_V3.4.0_20170427.jar" target-dir="libs/" />
+  <source-file src="src/android/libs/fastjson-1.1.45.android.jar" target-dir="libs/" />
+  <source-file src="src/android/libs/msfplugin-1.jar" target-dir="libs/" />
+  <source-file src="src/android/libs/utdid4all-1.0.4.jar" target-dir="libs/" />
+  <source-file src="src/android/securityguardaar3-5.1.81.aar" target-dir="libs" />
+
+  <framework src="src/android/msf.gradle" custom="true" type="gradleReference"/>
+
+   <!-- anim-->
+   <source-file src="src/android/res/anim/push_bottom_in.xml" target-dir="res/anim" />
+   <source-file src="src/android/res/anim/push_bottom_out.xml" target-dir="res/anim" />
+   <source-file src="src/android/res/anim/anim_tv_marquee_in.xml" target-dir="res/anim" />
+   <source-file src="src/android/res/anim/anim_tv_marquee_out.xml" target-dir="res/anim" />
+   <source-file src="src/android/res/anim/push_down_out.xml" target-dir="res/anim" />
+   <source-file src="src/android/res/anim/push_up_in.xml" target-dir="res/anim" />
+   <source-file src="src/android/res/anim/tf_slide_in_top.xml" target-dir="res/anim" />
+   <source-file src="src/android/res/anim/tf_slide_out_top.xml" target-dir="res/anim" />
+   <source-file src="src/android/res/anim/tm_window_grow_fade_in.xml" target-dir="res/anim" />
+   <source-file src="src/android/res/anim/tm_window_shrink_fade_out.xml" target-dir="res/anim" />
+   <source-file src="src/android/res/anim/uikit_cycle_7.xml" target-dir="res/anim" />
+   <source-file src="src/android/res/anim/uikit_filter_fadein.xml" target-dir="res/anim" />
+   <source-file src="src/android/res/anim/uikit_filter_fadeout.xml" target-dir="res/anim" />
+   <source-file src="src/android/res/anim/uikit_filter_fold.xml" target-dir="res/anim" />
+   <source-file src="src/android/res/anim/uikit_filter_select.xml" target-dir="res/anim" />
+   <source-file src="src/android/res/anim/uikit_filter_unfold.xml" target-dir="res/anim" />
+   <source-file src="src/android/res/anim/uikit_filter_unselect.xml" target-dir="res/anim" />
+   <source-file src="src/android/res/anim/uikit_shake.xml" target-dir="res/anim" />
+
+   <!-- color-->
+   <source-file src="src/android/res/color/mui_color_text_b3.xml" target-dir="res/color" />
+
+   <!-- drawable-->
+   <source-file src="src/android/res/drawable/bitmap_page_category_bg.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/color_thumb.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/com_taobao_tae_sdk_root_cer.jpg" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/com_taobao_tae_sdk_web_view_menu_item_bg.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/com_taobao_tae_sdk_web_view_title_bar_back.9.png" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/com_taobao_tae_sdk_web_view_title_bar_close.9.png" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/dotted_line_circle.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/drak_btn.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/drak_shap.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/drakred_btn.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/drakred_shap.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/gray_track.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/guide_round.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/img_stroke.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/m_paizhao.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/menu_left_btn.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/menu_left_btn_p.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/mm_title_back_btn.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/mmaster_camera.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/mmaster_img_s.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/mmaster_mui_btn.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/mmaster_mui_input_nor.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/mmaster_round_btn_s.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/mmater_mui_input.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/msf_bottom_btn_red.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/msf_bottom_btn_red_disabled.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/msf_bottom_btn_red_normal.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/msf_bottom_btn_red_pressed.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/msf_s_btn_default.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/msf_s_btn_font_style.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/msf_s_btn_pressed.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/msftheme_btn_default_holo_light.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/msftheme_edit_text_holo_light.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/msftheme_ratingbar_full_empty_holo_light.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/msftheme_ratingbar_full_filled_holo_light.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/msftheme_ratingbar_full_holo_light.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/selector_category_item.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/switch_thumb.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/switch_track.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/tm_black_coner_shap.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/tm_common_loading_style_cat.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/tm_common_loading_style_item.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/tm_maintab_item_pressed_rect.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/tm_maintab_trans_rect.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/tm_mui_bg_grey_shape.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/tm_mui_bg_input.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/tm_mui_bg_input_normal.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/tm_mui_btn_red.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/tm_mui_btn_red_disabled.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/tm_mui_btn_red_light.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/tm_mui_btn_red_light_disabled.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/tm_mui_btn_red_light_normal.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/tm_mui_btn_red_light_pressed.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/tm_mui_btn_red_normal.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/tm_mui_btn_red_pressed.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/tm_mui_btn_white.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/tm_mui_btn_white_disable.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/tm_mui_btn_white_normal.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/tm_mui_btn_white_pressed.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/tm_mui_c0_rect.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/tm_mui_c1_a80_rect.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/tm_mui_cent_line_with_gap_a20.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/tm_mui_cent_line_with_gap_a40.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/tm_mui_checkbox_0_selector.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/tm_mui_light_red_btn_text_selector.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/tm_mui_line_cl2.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/tm_mui_radiobutton_0_selector.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/tm_mui_switch_thumb_selector.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/tm_mui_switch_track_selector.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/tm_mui_system_btn_selector.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/tm_mui_tab_bar_indicator.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/tm_navi_menu_item_bg.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/uik_arrow.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/uik_imagesave_btn.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/uik_loading_progress.xml" target-dir="res/drawable" />
+   <source-file src="src/android/res/drawable/yw_1222.jpg" target-dir="res/drawable" />
+   
+   <!-- drawable-hdpi-->
+   <source-file src="src/android/res/drawable-hdpi/bg_title_bar.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/bitmap_book_read_chapterlist_repeat.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/com_taobao_tae_sdk_simple_toast_bg.9.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/guide_dot_black.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/guide_dot_white.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/ic_category_mark.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/ic_item_normal_bg.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/ic_item_selected_bg.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/ic_shelf_category_divider.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/ic_top_bar_category.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/ic_top_divider.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/iconfont_cback.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/iconfont_cuowu.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/iconfont_fanhui.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/iconfont_fanhuip.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/iconfont_iconmenu.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/iconfont_jinggao.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/iconfont_paizhao.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/iconfont_qj.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/iconfont_shanchu.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/iconfont_tianjia.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/iconfont_xiayiye.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/img.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/msf_paizhao_tianjia.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/pictures_no.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/pictures_selected.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/rectangle.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/sicon.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/title_left_t.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/title_left_w.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/tm_icon_messsage.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/tm_mui_loading_default_grey_cat.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/tm_mui_main_tab_btn_down.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/tm_mui_main_tab_btn_up.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/tm_mui_more_btn_down.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/tm_mui_more_btn_up.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/tm_mui_no_new_album_icon.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/tm_mui_red_btn_pic_disabled.9.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/tm_mui_red_btn_pic_normal.9.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/tm_mui_red_btn_pic_pressed.9.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/tm_mui_xlistview_footer_shadow.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/tm_mui_xlistview_header_shadow.png" target-dir="res/drawable-hdpi" />
+   <source-file src="src/android/res/drawable-hdpi/uik_list_logo.png" target-dir="res/drawable-hdpi" />
+
+   <!-- drawable-hdpi-->
+   <source-file src="src/android/res/drawable-ldpi/com_taobao_tae_sdk_web_view_title_bar_back.9.png" target-dir="res/drawable-ldpi" />
+   <source-file src="src/android/res/drawable-ldpi/com_taobao_tae_sdk_web_view_title_bar_close.9.png" target-dir="res/drawable-ldpi" />
+
+   <!-- drawable-mdpi-->
+   <source-file src="src/android/res/drawable-mdpi/com_taobao_tae_sdk_web_view_title_bar_back.9.png" target-dir="res/drawable-mdpi" />
+   <source-file src="src/android/res/drawable-mdpi/com_taobao_tae_sdk_web_view_title_bar_close.9.png" target-dir="res/drawable-mdpi" />
+
+   <!-- drawable-xhdpi-->
+   <source-file src="src/android/res/drawable-xhdpi/com_taobao_tae_sdk_web_view_title_bar_back.9.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/com_taobao_tae_sdk_web_view_title_bar_close.9.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/kakalib_round_button_normal.9.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/kakalib_round_button_pressed.9.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/loadingicon.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/msfic_launcher.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/splash_icon.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/tm_loading_cat_1.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/tm_loading_cat_2.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/tm_loading_cat_3.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/tm_loading_cat_4.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/tm_loading_cat_5.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/tm_loading_cat_6.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/tm_loading_cat_7.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/tm_loading_cat_8.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/tm_loading_cat_9.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/tm_loading_cat_10.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/tm_loading_cat_11.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/tm_loading_cat_12.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/tm_loading_cat_13.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/tm_loading_cat_14.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/tm_loading_cat_15.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/tm_loading_cat_16.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/tm_loading_cat_17.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/tm_loading_cat_18.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/tm_loading_cat_19.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/tm_loading_cat_20.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/tm_loading_item_1.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/tm_loading_item_2.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/tm_loading_item_3.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/tm_loading_item_4.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/tm_loading_item_5.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/tm_mui_bg_spinner.9.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/tm_mui_check_off.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/tm_mui_check_off_disable.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/tm_mui_check_on.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/tm_mui_check_on_disable.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/tm_mui_dashline.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/tm_mui_radiobutton_off.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/tm_mui_radiobutton_off_disable.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/tm_mui_radiobutton_on.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/tm_mui_radiobutton_on_disable.png" target-dir="res/drawable-xhdpi" />
+   <source-file src="src/android/res/drawable-xhdpi/uik_loading_icon.png" target-dir="res/drawable-xhdpi" />
+
+
+   <!-- drawable-xxhdpi-->
+   <source-file src="src/android/res/drawable-xxhdpi/com_taobao_tae_sdk_web_view_title_bar_back.9.png" target-dir="res/drawable-xxhdpi" />
+   <source-file src="src/android/res/drawable-xxhdpi/com_taobao_tae_sdk_web_view_title_bar_close.9.png" target-dir="res/drawable-xxhdpi" />
+   <source-file src="src/android/res/drawable-xxhdpi/iconfont_userinfo.png" target-dir="res/drawable-xxhdpi" />
+   <source-file src="src/android/res/drawable-xxhdpi/msftheme_btn_default_disabled_focused_holo_light.9.png" target-dir="res/drawable-xxhdpi" />
+   <source-file src="src/android/res/drawable-xxhdpi/msftheme_btn_default_disabled_holo_light.9.png" target-dir="res/drawable-xxhdpi" />
+   <source-file src="src/android/res/drawable-xxhdpi/msftheme_btn_default_focused_holo_light.9.png" target-dir="res/drawable-xxhdpi" />
+   <source-file src="src/android/res/drawable-xxhdpi/msftheme_btn_default_normal_holo_light.9.png" target-dir="res/drawable-xxhdpi" />
+   <source-file src="src/android/res/drawable-xxhdpi/msftheme_btn_default_pressed_holo_light.9.png" target-dir="res/drawable-xxhdpi" />
+   <source-file src="src/android/res/drawable-xxhdpi/msftheme_btn_rating_star_off_focused_holo_light.png" target-dir="res/drawable-xxhdpi" />
+   <source-file src="src/android/res/drawable-xxhdpi/msftheme_btn_rating_star_off_normal_holo_light.png" target-dir="res/drawable-xxhdpi" />
+   <source-file src="src/android/res/drawable-xxhdpi/msftheme_btn_rating_star_off_pressed_holo_light.png" target-dir="res/drawable-xxhdpi" />
+   <source-file src="src/android/res/drawable-xxhdpi/msftheme_btn_rating_star_on_focused_holo_light.png" target-dir="res/drawable-xxhdpi" />
+   <source-file src="src/android/res/drawable-xxhdpi/msftheme_btn_rating_star_on_normal_holo_light.png" target-dir="res/drawable-xxhdpi" />
+   <source-file src="src/android/res/drawable-xxhdpi/msftheme_btn_rating_star_on_pressed_holo_light.png" target-dir="res/drawable-xxhdpi" />
+   <source-file src="src/android/res/drawable-xxhdpi/msftheme_textfield_activated_holo_light.9.png" target-dir="res/drawable-xxhdpi" />
+   <source-file src="src/android/res/drawable-xxhdpi/msftheme_textfield_default_holo_light.9.png" target-dir="res/drawable-xxhdpi" />
+   <source-file src="src/android/res/drawable-xxhdpi/msftheme_textfield_disabled_focused_holo_light.9.png" target-dir="res/drawable-xxhdpi" />
+   <source-file src="src/android/res/drawable-xxhdpi/msftheme_textfield_disabled_holo_light.9.png" target-dir="res/drawable-xxhdpi" />
+   <source-file src="src/android/res/drawable-xxhdpi/msftheme_textfield_focused_holo_light.9.png" target-dir="res/drawable-xxhdpi" />
+   <source-file src="src/android/res/drawable-xxhdpi/paizhao.png" target-dir="res/drawable-xxhdpi" />
+   <source-file src="src/android/res/drawable-xxhdpi/paizhaodown.png" target-dir="res/drawable-xxhdpi" />
+   <source-file src="src/android/res/drawable-xxhdpi/sgroove_copy.9.png" target-dir="res/drawable-xxhdpi" />
+   <source-file src="src/android/res/drawable-xxhdpi/stoggle_copy1.9.png" target-dir="res/drawable-xxhdpi" />
+   <source-file src="src/android/res/drawable-xxhdpi/title_sc.png" target-dir="res/drawable-xxhdpi" />
+   <source-file src="src/android/res/drawable-xxhdpi/tm_mui_switch_off.9.png" target-dir="res/drawable-xxhdpi" />
+   <source-file src="src/android/res/drawable-xxhdpi/tm_mui_switch_thumb_disabled.9.png" target-dir="res/drawable-xxhdpi" />
+   <source-file src="src/android/res/drawable-xxhdpi/tm_mui_switch_thumb_on.9.png" target-dir="res/drawable-xxhdpi" />
+   <source-file src="src/android/res/drawable-xxhdpi/tm_mui_switch_thumb_on_disabled.9.png" target-dir="res/drawable-xxhdpi" />
+   <source-file src="src/android/res/drawable-xxhdpi/tm_mui_switch_track_off.9.png" target-dir="res/drawable-xxhdpi" />
+   <source-file src="src/android/res/drawable-xxhdpi/tm_mui_switch_track_off_disabled.9.png" target-dir="res/drawable-xxhdpi" />
+   <source-file src="src/android/res/drawable-xxhdpi/tm_mui_switch_track_on.9.png" target-dir="res/drawable-xxhdpi" />
+   <source-file src="src/android/res/drawable-xxhdpi/tm_mui_switch_track_on_disabled.9.png" target-dir="res/drawable-xxhdpi" />
+
+   <!-- drawable-xxxhdpi-->
+   <source-file src="src/android/res/drawable-xxxhdpi/com_taobao_tae_sdk_web_view_title_bar_back.9.png" target-dir="res/drawable-xxxhdpi" />
+   <source-file src="src/android/res/drawable-xxxhdpi/com_taobao_tae_sdk_web_view_title_bar_close.9.png" target-dir="res/drawable-xxxhdpi" />
+
+   <!-- layout-->
+   <source-file src="src/android/res/layout/bottom_dialog.xml" target-dir="res/layout" />
+   <source-file src="src/android/res/layout/com_taobao_tae_sdk_progress_dialog.xml" target-dir="res/layout" />
+   <source-file src="src/android/res/layout/com_taobao_tae_sdk_web_view_activity.xml" target-dir="res/layout" />
+   <source-file src="src/android/res/layout/com_taobao_tae_sdk_web_view_menu.xml" target-dir="res/layout" />
+   <source-file src="src/android/res/layout/com_taobao_tae_sdk_web_view_menu_item.xml" target-dir="res/layout" />
+   <source-file src="src/android/res/layout/com_taobao_tae_sdk_web_view_title_bar.xml" target-dir="res/layout" />
+   <source-file src="src/android/res/layout/msf_activity_camera.xml" target-dir="res/layout" />
+   <source-file src="src/android/res/layout/msf_activity_capture.xml" target-dir="res/layout" />
+   <source-file src="src/android/res/layout/msf_activity_mcamera.xml" target-dir="res/layout" />
+   <source-file src="src/android/res/layout/msf_activity_mmimg.xml" target-dir="res/layout" />
+   <source-file src="src/android/res/layout/msf_activity_sdklogin.xml" target-dir="res/layout" />
+   <source-file src="src/android/res/layout/msf_activity_sdkmmweb.xml" target-dir="res/layout" />
+   <source-file src="src/android/res/layout/msf_activity_sdknoidentifycode.xml" target-dir="res/layout" />
+   <source-file src="src/android/res/layout/msf_activity_sdkregister.xml" target-dir="res/layout" />
+   <source-file src="src/android/res/layout/msf_activity_sdkverify.xml" target-dir="res/layout" />
+   <source-file src="src/android/res/layout/msf_activity_skill.xml" target-dir="res/layout" />
+   <source-file src="src/android/res/layout/msf_activity_skillitem.xml" target-dir="res/layout" />
+   <source-file src="src/android/res/layout/msf_activity_verifygriditem.xml" target-dir="res/layout" />
+   <source-file src="src/android/res/layout/msf_comm_topbar.xml" target-dir="res/layout" />
+   <source-file src="src/android/res/layout/msf_comm_userbanner.xml" target-dir="res/layout" />
+   <source-file src="src/android/res/layout/msf_comm_verifybanner.xml" target-dir="res/layout" />
+   <source-file src="src/android/res/layout/tm_loading_dialog.xml" target-dir="res/layout" />
+   <source-file src="src/android/res/layout/tm_loading_view.xml" target-dir="res/layout" />
+   <source-file src="src/android/res/layout/tm_mui_actionbar_navi_menu.xml" target-dir="res/layout" />
+   <source-file src="src/android/res/layout/tm_mui_main_tab_grid_item.xml" target-dir="res/layout" />
+   <source-file src="src/android/res/layout/tm_mui_xlistview_footer.xml" target-dir="res/layout" />
+   <source-file src="src/android/res/layout/tm_mui_xlistview_header.xml" target-dir="res/layout" />
+   <source-file src="src/android/res/layout/tm_netbus_test_layout.xml" target-dir="res/layout" />
+   <source-file src="src/android/res/layout/tm_scroll_tab.xml" target-dir="res/layout" />
+   <source-file src="src/android/res/layout/tm_scroll_tab_menu.xml" target-dir="res/layout" />
+
+
+   <!-- raw-->
+   <source-file src="src/android/res/raw/beep.ogg" target-dir="res/raw" />
+
+
+   <!-- values-->
+   <source-file src="src/android/res/values/string.xml" target-dir="res/values" />
+   <source-file src="src/android/res/values/styles.xml" target-dir="res/values" />
+   <source-file src="src/android/res/values/attrs.xml" target-dir="res/values" />
+   <source-file src="src/android/res/values/color.xml" target-dir="res/values" />
+   <source-file src="src/android/res/values/alisdk_kernel_messages.xml" target-dir="res/values" />
+   <source-file src="src/android/res/values/alisdk_security_messages.xml" target-dir="res/values" />
+   <source-file src="src/android/res/values/alisdk_securityguard_messages.xml" target-dir="res/values" />
+   <source-file src="src/android/res/values/alisdk_system_messages.xml" target-dir="res/values" />
+   <source-file src="src/android/res/values/alisdk_ui_messages.xml" target-dir="res/values" />
+   <source-file src="src/android/res/values/colors.xml" target-dir="res/values" />
+   <source-file src="src/android/res/values/com_taobao_tae_sdk_strings.xml" target-dir="res/values" />
+   <source-file src="src/android/res/values/dimens.xml" target-dir="res/values" />
+   <source-file src="src/android/res/values/ids.xml" target-dir="res/values" />
+   <source-file src="src/android/res/values/msf_strings.xml" target-dir="res/values" />
+   <source-file src="src/android/res/values/tm_actionbar_navi_colors.xml" target-dir="res/values" />
+   <source-file src="src/android/res/values/tm_actionbar_navi_strings.xml" target-dir="res/values" />
+   <source-file src="src/android/res/values/tm_iconfont_strings.xml" target-dir="res/values" />
+   <source-file src="src/android/res/values/tm_mui_attrs.xml" target-dir="res/values" />
+   <source-file src="src/android/res/values/tm_mui_colors.xml" target-dir="res/values" />
+   <source-file src="src/android/res/values/tm_mui_dimens.xml" target-dir="res/values" />
+   <source-file src="src/android/res/values/tm_mui_font_size.xml" target-dir="res/values" />
+   <source-file src="src/android/res/values/tm_mui_font_styles.xml" target-dir="res/values" />
+   <source-file src="src/android/res/values/tm_mui_strings.xml" target-dir="res/values" />
+   <source-file src="src/android/res/values/tm_mui_styles.xml" target-dir="res/values" />
+   <source-file src="src/android/res/values/tm_mui_widget_styles.xml" target-dir="res/values" />
+   <source-file src="src/android/res/values/uik_core_attrs.xml" target-dir="res/values" />
+   <source-file src="src/android/res/values/uik_core_color.xml" target-dir="res/values" />
+   <source-file src="src/android/res/values/uik_core_dimen.xml" target-dir="res/values" />
+   <source-file src="src/android/res/values/uik_core_strings.xml" target-dir="res/values" />
+   <source-file src="src/android/res/values/uik_core_styles.xml" target-dir="res/values" />
+   <source-file src="src/android/res/values/uik_dimens.xml" target-dir="res/values" />
+   <source-file src="src/android/res/values/uik_extend_attrs.xml" target-dir="res/values" />
+   <source-file src="src/android/res/values/uik_extend_colors.xml" target-dir="res/values" />
+   <source-file src="src/android/res/values/uik_extend_ids.xml" target-dir="res/values" />
+   <source-file src="src/android/res/values/uik_extend_strings.xml" target-dir="res/values" />
+   <source-file src="src/android/res/values/uik_extend_styles.xml" target-dir="res/values" />
+   <source-file src="src/android/res/values/uik_iconfont_strings.xml" target-dir="res/values" />
+
+   <!-- values-w820dp-->
+   <source-file src="src/android/res/values-w820dp/dimens.xml" target-dir="res/values-w820dp" />
+
+<source-file src="src/android/msf.java" target-dir="src/com/plugin/msf/msf" />
+
+</platform>
+
+</plugin>
